@@ -1,0 +1,29 @@
+@bodyBg: #fff;
+@bright: #68c390;
+@dark: darken(@bright, 5%);
+@brightText: #ebdba7;
+@textColor: #333;
+@linkColor: @bright;
+@errorColor: #b94a48;
+
+@screen-sm: 768px;
+
+body {
+  background-color: @bodyBg;
+  font: normal 14px/1.5 "Helvetica Neue", Helvetica, "Hiragino Sans GB", Arial, "STHeiti", SimSun, sans-serif;
+  color: @textColor;
+}
+
+a {
+  color: @linkColor;
+  &:hover {
+    color: lighten(@linkColor, 5%);
+    text-decoration: none;
+    cursor: pointer;
+  }
+}
+
+.content {
+  width: 100%;
+  position: relative;
+}
