@@ -9,10 +9,13 @@
   "dependencies": {
     "express": "*",
     "jade": "*",
+    "mongoose": "*",
     "connect-assets": "*",
     "coffee-script": "*",
     "less": "*",
-    "underscore": "*",
+    "underscore": "*"
+  },
+  "devDependencies": {
     "expect.js": "*",
     "superagent": "*"
   }

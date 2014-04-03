@@ -2,5 +2,7 @@ exports = mongoose = require 'mongoose'
 exports = Schema = mongoose.Schema
 exports = ObjectId = Schema.ObjectId
 
-mongoose.connect 'mongodb://localhost/node'
+mongo = GLOBAL.db || 'mongodb://localhost/match'
+
+mongoose.connect mongo
 

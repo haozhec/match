@@ -2,9 +2,9 @@ request = require 'superagent'
 expect = require 'expect.js'
 server = require './server'
 
-describe 'Suite one', ->
-  it 'test one', (done)->
-    request.get server.host
+describe 'Test auth and user modules', ->
+  it 'should register an user', (done)->
+    request.get server.host + "/auth/register"
     .end (res)->
       expect(res).to.exist
       expect(res.status).to.equal 200
