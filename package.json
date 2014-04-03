@@ -13,10 +13,12 @@
     "connect-assets": "*",
     "coffee-script": "*",
     "less": "*",
-    "underscore": "*"
+    "underscore": "*",
+    "async": "*"
   },
   "devDependencies": {
     "expect.js": "*",
-    "superagent": "*"
+    "superagent": "*",
+    "better-require": "*"
   }
 }
