@@ -24,7 +24,7 @@ exports.configure = (app, express) ->
     GLOBAL.host = "frontend.dandzire.com:4000"
 
   app.configure 'test', ->
-    app.use express.errorHandler()
+    app.use express.errorHandler dumpExceptions: true, showStack: true
     GLOBAL.db = 'mongodb://localhost/match-test' 
     GLOBAL.port = 5801
     GLOBAL.host = "frontend.dandzire.com:4000"

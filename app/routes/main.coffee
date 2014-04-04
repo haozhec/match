@@ -10,3 +10,5 @@ module.exports = (app)->
   app.post "/feed", FeedController.publish
 
   app.get "/feed", FeedController.query
+
+  app.patch "/feed/:id", FeedController.update

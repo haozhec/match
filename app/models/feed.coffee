@@ -33,7 +33,13 @@ feedShema = new mongoose.Schema
   email: 
     type: String
     required: true
-
+  description: 
+    type: String
+    trim: true
+    validate: [
+      (v)->
+        v.trim().length < 100
+      , "it's too long"]
 feedShema.index from: 1, to: 1
 
 module.exports = mongoose.model 'Feed', feedShema

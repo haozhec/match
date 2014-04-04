@@ -1,3 +1,4 @@
+_ = require "underscore"
 Feed = require "../models/feed"
 
 module.exports.publish = (req, res)->
@@ -23,4 +24,17 @@ module.exports.query = (req, res)->
       res.json feeds
     else 
       res.send 500
+
+module.exports.update = (req, res)->
+  patch = req.body
+
+  patch = _.pick patch, "from", "to", "until", "description"
+
+  Feed.findById req.params.id, (err, feed)->
+    _.extend feed, patch
+    feed.save (err, feed)->
+      if not err
+        res.json feed
+      else 
+        res.send 400
   
