@@ -31,6 +31,6 @@ exports.configure = (app, express) ->
 
   app.configure 'production', ->
     app.use express.errorHandler()
-    GLOBAL.port = 5802
-    GLOBAL.host = "frontend.dandzire.com"
+    GLOBAL.port = 5600
+    GLOBAL.host = "wx.dandzire.com"
   
