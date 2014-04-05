@@ -1,5 +1,7 @@
 _ = require "underscore"
 Feed = require "../models/feed"
+wechat = require "wechat"
+
 
 greeting =
   first: "欢迎来到帮带网."
@@ -51,43 +53,43 @@ storage = do ->
 
 module.exports.delegate = (req, res)->
   wechat "agoodpassword", (req, res, next) ->
-  msg = req.weixin
-  if msg.MsgType is "event" and msg.Event is "subscribe"
-    storage.upsertQuery msg.FromUserName
-    res.reply greeting.first + qanda[0].question
-    return
-  if msg.MsgType is "text"
-    uid = msg.FromUserName
-    if storage.hasQuery(uid)
-      query = storage.getQuery(uid)
-      content = msg.Content.trim().toLowerCase()
-      if query.step < qanda.length
-        qa = qanda[query.step]
-        if qa.validate and typeof qa.validate is "function" and not qa.validate(content)
-          res.reply greeting.parden + qa.question
-          return
+    msg = req.weixin
+    if msg.MsgType is "event" and msg.Event is "subscribe"
+      storage.upsertQuery msg.FromUserName
+      res.reply greeting.first + qanda[0].question
+      return
+    if msg.MsgType is "text"
+      uid = msg.FromUserName
+      if storage.hasQuery(uid)
+        query = storage.getQuery(uid)
+        content = msg.Content.trim().toLowerCase()
+        if query.step < qanda.length
+          qa = qanda[query.step]
+          if qa.validate and typeof qa.validate is "function" and not qa.validate(content)
+            res.reply greeting.parden + qa.question
+            return
+          else
+            if qa.answer.type is "choice"
+              option = qa.answer.options[content]
+              query[qa.alias] = option.value
+              query.step = option.next
+            else
+              query[qa.alias] = content
+              query.step = qa.answer.next
+            storage.upsertQuery uid, query
+            if query.step < qanda.length
+              res.reply qanda[query.step].question
+            else
+              console.info "uid: ", uid, "query:", query
+              res.reply "谢谢查询"
+            return
         else
-          if qa.answer.type is "choice"
-            option = qa.answer.options[content]
-            query[qa.alias] = option.value
-            query.step = option.next
-          else
-            query[qa.alias] = content
-            query.step = qa.answer.next
-          storage.upsertQuery uid, query
-          if query.step < qanda.length
-            res.reply qanda[query.step].question
-          else
-            console.info "uid: ", uid, "query:", query
-            res.reply "谢谢查询"
+          console.info "uid: ", uid, "query:", query
+          res.reply "已经收到了您的查询，谢谢查询"
           return
       else
-        console.info "uid: ", uid, "query:", query
-        res.reply "已经收到了您的查询，谢谢查询"
+        storage.upsertQuery uid
+        res.reply greeting.hi + qanda[0].question
         return
-    else
-      storage.upsertQuery uid
-      res.reply greeting.hi + qanda[0].question
-      return
-  res.reply "hehe"
+    res.reply "hehe"
   
