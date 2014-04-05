@@ -15,7 +15,8 @@
     "less": "*",
     "underscore": "*",
     "async": "*",
-    "wechat": "*"
+    "wechat": "*",
+    "uglify-js": "*"
   },
   "devDependencies": {
     "expect.js": "*",
